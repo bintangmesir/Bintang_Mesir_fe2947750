@@ -34,8 +34,19 @@ const EditPhoto = () => {
 
   useEffect(() => {
     setLoading(true);
+    fetch(`https://gallery-app-server.vercel.app/photos` + id)
+      .then((response) => response.json())
+      .then((json) => {
+        setLoading(false);
+        setImageUrl(json.imageUrl);
+        setCaptions(json.captions);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
     // TODO: answer here
-  }, [id]);
+  }, []);
 
   if (error) return <div>Error!</div>;
 
